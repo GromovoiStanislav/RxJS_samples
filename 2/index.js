@@ -145,8 +145,52 @@ function delay(ms = 1000) {
 		}, ms);
 	});
 }
-const result = rxjs.from(delay(3000));
-result.subscribe(x => console.log(x))
+// const result = rxjs.from(delay(3000));
+// result.subscribe(x => console.log(x))
+
+
+///////////////////////////////////////////////////////
+// rxjs.of(10, 20, 30, [1, 2, 3])
+// .pipe(rxjs.first())
+// .subscribe(x => console.log(x));
+
+// .pipe(rxjs.last())
+// .subscribe(x => console.log(x));
+
+// .pipe(rxjs.find(x=>x>15)) //20
+// .subscribe(x => console.log(x));
+
+// .pipe(rxjs.findIndex(x => x > 15)) //1
+// .subscribe(x => console.log(x));
+
+// .pipe(rxjs.take(2)) //10, 20,
+// .subscribe(x => console.log(x));
+
+// .pipe(rxjs.skip(2)) //30, [1, 2, 3]
+// .subscribe(x => console.log(x));
+
+
+// .pipe(rxjs.skipLast(2)) //10, 20,
+// .subscribe(x => console.log(x));
+
+// .pipe(rxjs.skipWhile(x => x < 15)) //20, 30, [1, 2, 3]
+// .subscribe(x => console.log(x));
+
+// rxjs.interval(500)
+//     .pipe(
+//         rxjs.skipWhile(x => x < 5),
+//         //rxjs.take(10),
+//         rxjs.takeWhile(x => x < 13)
+//         )
+//     .subscribe(x => console.log(x));
+
+// rxjs.interval(500)
+// 	.pipe(
+// 		rxjs.skipUntil(rxjs.timer(3000)),
+// 		rxjs.takeUntil(rxjs.timer(5000))
+// 	)
+// 	.subscribe(x => console.log(x));
+
 
 
 

@@ -9,7 +9,6 @@ const take = require('rxjs').take;
 const rxjs = require('rxjs');
 
 
-
 const Subject = require('rxjs').Subject;
 const Observable = require('rxjs').Observable;
 
@@ -50,7 +49,6 @@ const Observable = require('rxjs').Observable;
 // 		error: err => console.log('error:', err),
 // 		complete: () => console.log('the end'),
 // 	});
-
 
 
 ///////////////////////////////////////////
@@ -98,13 +96,12 @@ const Observable = require('rxjs').Observable;
 // 	});
 
 
-
 function* generateDoubles(seed) {
-	let i = seed;
-	while (true) {
-		yield i;
-		i = 2 * i; // double it
-	}
+    let i = seed;
+    while (true) {
+        yield i;
+        i = 2 * i; // double it
+    }
 }
 
 // const iterator = generateDoubles(3);
@@ -139,12 +136,13 @@ function* generateDoubles(seed) {
 // 30
 
 function delay(ms = 1000) {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			resolve(ms);
-		}, ms);
-	});
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(ms);
+        }, ms);
+    });
 }
+
 // const result = rxjs.from(delay(3000));
 // result.subscribe(x => console.log(x))
 
@@ -192,8 +190,6 @@ function delay(ms = 1000) {
 // 	.subscribe(x => console.log(x));
 
 
-
-
 ////////////////////////////////////////////////////////////////////
 // const observable = new Observable((subscriber) => {
 // 	subscriber.next(-2);
@@ -235,15 +231,29 @@ function delay(ms = 1000) {
 
 
 // observable.subscribe((data)=>{console.log(data);})
- //observable.subscribe((data)=>{console.log(data);})
+//observable.subscribe((data)=>{console.log(data);})
 
 
- /////////////////////////////////////////
- // rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
+/////////////////////////////////////////
+// rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
 //     .pipe(
 //         rxjs.filter(x=>x>3),
 //     )
 //     .subscribe(x => console.log(x));
+
+
+/////////////////////////////////////////
+const observableValues = rxjs.(1, 2, 3, 4, 5, 6);
+const [evens$, odds$] = rxjs.partition(observableValues, value => value % 2 === 0);
+odds$.subscribe(x => console.log('odds', x));
+evens$.subscribe(x => console.log('evens', x));
+// Logs:
+// odds 1
+// odds 3
+// odds 5
+// evens 2
+// evens 4
+// evens 6
 
 
 ////////////////////////////////////////////////////////
@@ -269,3 +279,12 @@ function delay(ms = 1000) {
 // .pipe(rxjs.distinctUntilChanged())
 //  .subscribe(console.log);
 // Logs: 1, 2, 1, 3
+
+// rxjs.of(30, 31, 20, 34, 33, 29, 35, 20)
+//     .pipe(
+//         rxjs.distinctUntilChanged((prevHigh, temp) => {
+//             return temp <= prevHigh;
+//         })
+//     )
+//     .subscribe(console.log);
+// Logs: 30, 31, 34, 35

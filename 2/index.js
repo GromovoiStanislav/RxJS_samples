@@ -237,4 +237,35 @@ function delay(ms = 1000) {
 // observable.subscribe((data)=>{console.log(data);})
  //observable.subscribe((data)=>{console.log(data);})
 
- 
+
+ /////////////////////////////////////////
+ // rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
+//     .pipe(
+//         rxjs.filter(x=>x>3),
+//     )
+//     .subscribe(x => console.log(x));
+
+
+////////////////////////////////////////////////////////
+// rxjs.of(1, 1, 2, 2, 2, 1, 2, 3, 4, 3, 2, 1)
+//     .pipe(rxjs.distinct())
+//     .subscribe(x => console.log(x));
+// Outputs: 1, 2, 3, 4
+
+
+// rxjs.of(
+//     { age: 4, name: 'Foo' },
+//     { age: 7, name: 'Bar' },
+//     { age: 5, name: 'Foo' }
+// )
+//     .pipe(rxjs.distinct(({ name }) => name))
+//     .subscribe(x => console.log(x));
+// Outputs
+// { age: 4, name: 'Foo' }
+// { age: 7, name: 'Bar' }
+
+
+//rxjs.of(1, 1, 1, 2, 2, 2, 1, 1, 3, 3)
+// .pipe(rxjs.distinctUntilChanged())
+//  .subscribe(console.log);
+// Logs: 1, 2, 1, 3

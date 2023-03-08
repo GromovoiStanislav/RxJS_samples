@@ -274,7 +274,7 @@ evens$.subscribe(x => console.log('evens', x));
 // { age: 4, name: 'Foo' }
 // { age: 7, name: 'Bar' }
 
-
+///////////////////////////////////////////////////////
 //rxjs.of(1, 1, 1, 2, 2, 2, 1, 1, 3, 3)
 // .pipe(rxjs.distinctUntilChanged())
 //  .subscribe(console.log);
@@ -288,3 +288,30 @@ evens$.subscribe(x => console.log('evens', x));
 //     )
 //     .subscribe(console.log);
 // Logs: 30, 31, 34, 35
+
+///////////////////////////////////////////////////////
+// rxjs.of(
+//     { age: 4, name: 'Foo' },
+//     { age: 7, name: 'Bar' },
+//     { age: 5, name: 'Foo' },
+//     { age: 6, name: 'Foo' }
+// ).pipe(
+//     rxjs.distinctUntilKeyChanged('name')
+// ).subscribe(console.log);
+// displays:
+// { age: 4, name: 'Foo' }
+// { age: 7, name: 'Bar' }
+// { age: 5, name: 'Foo' }
+
+// rxjs.of(
+//     { age: 4, name: 'Foo1' },
+//     { age: 7, name: 'Bar' },
+//     { age: 5, name: 'Foo2' },
+//     { age: 6, name: 'Foo3' }
+// ).pipe(
+//     rxjs.distinctUntilKeyChanged('name', (x, y) => x.substring(0, 3) === y.substring(0, 3))
+// ).subscribe(x => console.log(x));
+// displays:
+// { age: 4, name: 'Foo1' }
+// { age: 7, name: 'Bar' }
+// { age: 5, name: 'Foo2' }

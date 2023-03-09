@@ -325,11 +325,36 @@ evens$.subscribe(x => console.log('evens', x));
 //         rxjs.bufferWhen(() => rxjs.interval(1000 + Math.random() * 4000)),
 //         rxjs.take(4)
 //     )
-//     .subscribe(createSubscribe('buffer'));
+//     .subscribe(x => console.log(x));
 
 // rxjs.range(0,32)
 //     .pipe(
 //         rxjs.bufferCount(5),
 //         //rxjs.bufferCount(5,4),
 //     )
-//     .subscribe(createSubscribe('buffer'));
+//     .subscribe(console.log);
+
+/////////////////////////////////////////
+// rxjs.of()
+//     .pipe(
+//         rxjs.defaultIfEmpty('no data')
+//     )
+//     .subscribe(x => console.log(x));
+
+
+// rxjs.of(1,2,3,4,5,6)
+//     .pipe(
+//         rxjs.delay(4000),
+//         rxjs.map(x => x * 2),
+//         rxjs.every(x => x % 2 === 0)
+//     )
+//     .subscribe(console.log); //-> false or true
+
+rxjs.of(1, 2, 3, 4)
+    .pipe(
+        rxjs.delay(4000),
+        rxjs.tap(x => console.log('Befor: ', x)),
+        rxjs.map(x => x ** 2),
+        rxjs.tap(x => console.log('After: ', x)),
+    )
+    .subscribe(console.log); 

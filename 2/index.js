@@ -315,3 +315,21 @@ evens$.subscribe(x => console.log('evens', x));
 // { age: 4, name: 'Foo1' }
 // { age: 7, name: 'Bar' }
 // { age: 5, name: 'Foo2' }
+
+//////////////////////////////////
+// rxjs.interval(500)
+//     .pipe(
+//         //rxjs.buffer(rxjs.interval(2000)),
+//         //rxjs.bufferTime(2000),
+//         //rxjs.bufferTime(2000, 5000),
+//         rxjs.bufferWhen(() => rxjs.interval(1000 + Math.random() * 4000)),
+//         rxjs.take(4)
+//     )
+//     .subscribe(createSubscribe('buffer'));
+
+// rxjs.range(0,32)
+//     .pipe(
+//         rxjs.bufferCount(5),
+//         //rxjs.bufferCount(5,4),
+//     )
+//     .subscribe(createSubscribe('buffer'));

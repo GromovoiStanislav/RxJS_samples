@@ -13,34 +13,38 @@ function createSubscribe(name) {
 }
 
 
-// rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
+
+// rxjs.interval(500)
 //     .pipe(
-//         rxjs.filter(x=>x>3),
+//         //rxjs.buffer(rxjs.interval(2000)),
+//         //rxjs.bufferTime(2000),
+//         //rxjs.bufferTime(2000, 5000),
+//         rxjs.bufferWhen(() => rxjs.interval(1000 + Math.random() * 4000)),
+//         rxjs.take(4)
 //     )
-//     .subscribe(createSubscribe('filter'));
+//     .subscribe(createSubscribe('buffer'));
 
-
-rxjs.fromEvent(document.querySelector('input'), 'keyup')
-    .pipe(
-        rxjs.map(e => e.target.value),
-        rxjs.debounceTime(1000),
-        rxjs.distinct(),
-    )
-    .subscribe(createSubscribe('debounceTime'));
-
-
-
-
-// rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
+// rxjs.range(0,32)
 //     .pipe(
-//         rxjs.distinct(),
+//         rxjs.bufferCount(5,),
+//         //rxjs.bufferCount(5,4),
 //     )
-//     .subscribe(createSubscribe('filter'));
+//     .subscribe(createSubscribe('buffer'));
 
 
-
-// rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
+// rxjs.interval(1000)
 //     .pipe(
-//         rxjs.distinctUntilChanged(),
+//        rxjs.buffer(rxjs.fromEvent(document, 'click')),
+//         //rxjs.map(x => x.length)
 //     )
-// .subscribe(createSubscribe('from'))
+// .subscribe(createSubscribe('buffer'));
+
+
+// const clicks = rxjs.fromEvent(document, 'click');
+// const intervalEvents = rxjs.interval(1000);
+// const buffered = intervalEvents.pipe(
+//     rxjs.buffer(clicks),
+//     rxjs.map(x => x.length));
+// buffered.subscribe(x => console.log(x));
+
+

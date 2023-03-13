@@ -135,6 +135,12 @@ function* generateDoubles(seed) {
 // 20
 // 30
 
+
+// rxjs.from(Promise.resolve([1, 2, 3])).subscribe(console.log);
+// Logs:
+// [1, 2, 3]
+
+
 function delay(ms = 1000) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -386,3 +392,31 @@ evens$.subscribe(x => console.log('evens', x));
 //// const higherOrder = rxjs.range(1, 3).pipe(rxjs.map(x => rxjs.range(x, 3)))
 // const higherOrder = rxjs.range(1, 3).pipe(rxjs.map(x => rxjs.interval(1000).pipe(rxjs.take(4))))
 // higherOrder.pipe(rxjs.concatAll()).subscribe(x => console.log(x));
+
+
+
+//////////////////////////////////////
+// rxjs.of('Hello').subscribe(x => rxjs.of(x + ' world').subscribe(console.log));
+// Logs: Hello world'
+
+// rxjs.of('Hello')
+//     .pipe(
+//         rxjs.mergeMap(x => rxjs.of(x + ' world'))
+//     )
+//     .subscribe(console.log);
+// Logs: Hello world'
+
+// const interval = rxjs.interval(1000)
+//     .pipe(
+//         rxjs.mergeMap(x => rxjs.of('a', 'b', 'c').pipe(rxjs.map(i => x + i)))
+//     )
+//     .subscribe(console.log);
+// Logs: 0a, 0b, 0c, 1a, 1b, 1c, 2a, 2b, 2c...
+
+
+// const interval = rxjs.interval(1000)
+//     .pipe(
+//         rxjs.concatMap(x => rxjs.of('a', 'b', 'c').pipe(rxjs.map(i => x + i)))
+//     )
+//     .subscribe(console.log);
+// Logs: 0a, 0b, 0c, 1a, 1b, 1c, 2a, 2b, 2c...

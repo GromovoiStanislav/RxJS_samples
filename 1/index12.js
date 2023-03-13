@@ -13,6 +13,8 @@ function createSubscribe(name) {
 }
 
 
+
+
 // rxjs.of('Hello').subscribe(x => rxjs.of(x + ' world').subscribe(createSubscribe('mergeMap')));
 
 // rxjs.of('Hello')
@@ -27,15 +29,6 @@ function createSubscribe(name) {
 //         rxjs.mergeMap(x => rxjs.of('a', 'b', 'c').pipe(rxjs.map(i => x + i)))
 //     )
 //     .subscribe(x => console.log(x));
-
-
-// const interval = rxjs.interval(1000)
-//     .pipe(
-//         rxjs.concatMap(x => rxjs.of('a', 'b', 'c').pipe(rxjs.map(i => x + i)))
-//     )
-//     .subscribe(x => console.log(x));
-
-
 
 // rxjs.range(1, 10)
 //     .pipe(

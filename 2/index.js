@@ -436,3 +436,124 @@ evens$.subscribe(x => console.log('evens', x));
 //     )
 //     .subscribe(console.log);
 // Logs: 0a, 0b, 0c, 1a, 1b, 1c, 2a, 2b, 2c...
+
+
+
+///////////////////////////////////////
+// const s1 = rxjs.of('Hello')
+// const s2 = rxjs.of('world')
+// rxjs.zip(s1.pipe(rxjs.delay(1000)), s2).subscribe(console.log);
+// //Log: ['Hello','world']
+
+
+
+// const age$ = rxjs.of(27, 25, 29);
+// const name$ = rxjs.of('Foo', 'Bar', 'Beer');
+// const isDev$ = rxjs.of(true, true, false);
+// rxjs.zip(age$, name$, isDev$).subscribe(x => console.log(x));
+// // Outputs
+// // [27, 'Foo', true]
+// // [25, 'Bar', true]
+// // [29, 'Beer', false]
+
+
+// const age$ = rxjs.of(27, 25, 29);
+// const name$ = rxjs.of('Foo', 'Bar', 'Beer');
+// const isDev$ = rxjs.of(true, true, false);
+// rxjs.zip(age$, name$, isDev$).pipe(
+//     rxjs.map(([age, name, isDev]) => ({ age, name, isDev }))
+// ).subscribe(x => console.log(x));
+// // Outputs
+// // { age: 27, name: 'Foo', isDev: true }
+// // { age: 25, name: 'Bar', isDev: true }
+// // { age: 29, name: 'Beer', isDev: false }
+
+
+// rxjs.zip(
+//     rxjs.interval(1000),
+//     rxjs.interval(500).pipe(rxjs.take(3))
+// ).subscribe(console.log);
+// // Outputs
+// // [0, 0]
+// // [1, 1]
+// // [2, 2]
+
+
+
+//////////////////////////////////////
+// const int1 = rxjs.interval(1000)
+// const int2 = rxjs.interval(500)
+// int1.pipe(
+//     rxjs.take(4),
+//     rxjs.withLatestFrom(int2)
+// ).subscribe(console.log);
+// // Outputs
+// // [0, 0]
+// // [1, 2]
+// // [2, 4]
+// // [3, 6]
+
+
+///////////////////////////////////
+// const firstTimer = rxjs.timer(0, 1000); // emit 0, 1, 2... after every second, starting from now
+// const secondTimer = rxjs.timer(500, 1000); // emit 0, 1, 2... after every second, starting 0,5s from now
+// rxjs.combineLatest([firstTimer, secondTimer]).subscribe(console.log);
+// // Logs
+// // [0, 0] after 0.5s
+// // [1, 0] after 1s
+// // [1, 1] after 1.5s
+// // [2, 1] after 2s
+
+
+// const t1 = rxjs.timer(1000, 2000);
+// const t2 = rxjs.timer(2000, 2000);
+// const t3 = rxjs.timer(3000, 2000);
+// const t4 = rxjs.timer(4000, 2000);
+// rxjs.combineLatest(t1, t2, t3, t4).subscribe(console.log);
+// // Outputs
+// // [1, 0, 0, 0]
+// // [1, 1, 0, 0]
+// // [1, 1, 1, 0]
+// // [2, 1, 1, 0]
+// // [2, 2, 1, 0]
+// // [2, 2, 1, 1]
+// // [2, 2, 2, 1]
+// // [3, 2, 2, 1]
+
+
+// const weight = rxjs.of(70, 72, 76, 79, 75);
+// const height = rxjs.of(1.76, 1.77, 1.78);
+// rxjs.combineLatest([weight, height]).pipe(
+//     rxjs.map(([w, h]) => w / (h * h)),
+// ).subscribe(x => console.log('BMI is ' + x));
+// // Outputs:
+// // BMI is 24.212293388429753
+// // BMI is 23.93948099205209
+// // BMI is 23.671253629592222
+
+
+// const observables = {
+//     a: rxjs.of(1).pipe(rxjs.delay(1000), rxjs.startWith(0)),
+//     b: rxjs.of(5).pipe(rxjs.delay(5000), rxjs.startWith(0)),
+//     c: rxjs.of(10).pipe(rxjs.delay(10000), rxjs.startWith(0))
+// };
+// rxjs.combineLatest(observables).subscribe(console.log);
+// // Logs
+// // { a: 0, b: 0, c: 0 } immediately
+// // { a: 1, b: 0, c: 0 } after 1s
+// // { a: 1, b: 5, c: 0 } after 5s
+// // { a: 1, b: 5, c: 10 } after 10s
+
+
+// const observables = [1, 5, 10].map(
+//     n => rxjs.of(n).pipe(
+//         rxjs.delay(n * 1000), // emit 0 and then emit n after n seconds
+//         rxjs.startWith(0)
+//     )
+// );
+// rxjs.combineLatest(observables).subscribe(console.log);
+// // Logs
+// // [0, 0, 0] immediately
+// // [1, 0, 0] after 1s
+// // [1, 5, 0] after 5s
+// // [1, 5, 10] after 10s

@@ -557,3 +557,174 @@ evens$.subscribe(x => console.log('evens', x));
 // // [1, 0, 0] after 1s
 // // [1, 5, 0] after 5s
 // // [1, 5, 10] after 10s
+
+
+/////////////////////////////////////
+// //Continue with a different Observable when there's an error
+// rxjs.of(1, 2, 3, 4, 5)
+//     .pipe(
+//         rxjs.map(n => {
+//             if (n === 4) {
+//                 throw 'four!';
+//             }
+//             return n;
+//         }),
+//         rxjs.catchError(err => rxjs.of('I', 'II', 'III', 'IV', 'V'))
+//     )
+//     .subscribe(console.log);
+//   // 1, 2, 3, I, II, III, IV, V
+
+
+// //Retry the caught source Observable again in case of error, similar to retry() operator
+// rxjs.of(1, 2, 3, 4, 5)
+//     .pipe(
+//         rxjs.map(n => {
+//             if (n === 4) {
+//                 throw 'four!';
+//             }
+//             return n;
+//         }),
+//         rxjs.catchError((err, caught) =>caught),
+//         rxjs.take(30)
+//     )
+//     .subscribe(x => console.log(x));
+//   // 1, 2, 3, 1, 2, 3, ...
+
+
+// //Throw a new error when the source Observable throws an error
+// rxjs.of(1, 2, 3, 4, 5)
+//     .pipe(
+//         rxjs.map(n => {
+//             if (n === 4) {
+//                 throw 'four!';
+//             }
+//             return n;
+//         }),
+//         rxjs.catchError(err => {
+//             throw 'error in source. Details: ' + err;
+//         })
+//     )
+//     .subscribe({
+//         next: x => console.log(x),
+//         error: err => console.log(err)
+//     });
+//   // 1, 2, 3, error in source. Details: four!
+
+
+//////////////////////////////////////
+// //Subscribe to the next Observable after map fails
+// rxjs.onErrorResumeNext(
+//     rxjs.of(1, 2, 3, 0).pipe(
+//         rxjs.map(x => {
+//             if (x === 0) {
+//                 throw Error();
+//             }
+//             return 10 / x;
+//         })
+//     ),
+//     of(1, 2, 3)
+// )
+//     .subscribe({
+//         next: value => console.log(value),
+//         error: err => console.log(err),     // Will never be called.
+//         complete: () => console.log('done')
+//     });
+// // Logs:
+// // 10
+// // 5
+// // 3.3333333333333335
+// // 1
+// // 2
+// // 3
+// // 'done'
+
+//////////////////////////////
+// //Repeat a message stream, 3 times
+// rxjs.of('Repeat message').pipe(rxjs.repeat(3)).subscribe(console.log);
+// // 'Repeat message'
+// // 'Repeat message'
+// // 'Repeat message'
+
+// //Repeat 3 values, 2 times
+// rxjs.interval(1000).pipe(rxjs.take(3), rxjs.repeat(2))
+//     .subscribe(x => console.log(x));
+// // Results every second
+// // 0
+// // 1
+// // 2
+// // 0
+// // 1
+// // 2
+
+// // Repeat 3 times with a delay of 1 second between repetitions
+// rxjs.of(`Hello, it is ${new Date()}`)
+//     .pipe(
+//         
+//         rxjs.repeat({
+//             count: 3,
+//             delay: 1000,
+//         })
+//     )
+//     .subscribe(console.log)
+// //Hello, it is Thu Mar 16 2023 16:24:24 GMT+0000
+// //Hello, it is Thu Mar 16 2023 16:24:24 GMT+0000
+// //Hello, it is Thu Mar 16 2023 16:24:24 GMT+0000
+
+
+/////////////////////////////////////////////
+// rxjs.interval(1000).pipe(
+//     rxjs.map(value => {
+//         if (value > 5) {
+//             throw new Error('Error');
+//         }
+//         return value;
+//     }),
+//     rxjs.retry(2) // retry 2 times on error
+// ).subscribe({
+//     next: value => console.log(value),
+//     error: err => console.log(`${err}: Retried 2 times then quit!`)
+// });
+// //или
+// rxjs.interval(500).pipe(
+//     rxjs.mergeMap(val => val > 5 ? rxjs.throwError(() => 'Error!') : rxjs.of(val)),
+//     rxjs.retry(2) // retry 2 times on error
+// ).subscribe({
+//     next: value => console.log(value),
+//     error: err => console.log(`${err}: Retried 2 times then quit!`)
+// });
+// // Output:
+// // 0..1..2..3..4..5..
+// // 0..1..2..3..4..5..
+// // 0..1..2..3..4..5..
+// // 'Error!: Retried 2 times then quit!'
+
+
+// rxjs.interval(1000).pipe(
+//     rxjs.map(value => {
+//         if (value > 5) {
+//             throw value;//Ошибка бужет перехвачена в retryWhen
+//         }
+//         return value;
+//     }),
+//     rxjs.retryWhen(errors =>
+//         errors.pipe(
+//             rxjs.tap(value => console.log(`Value ${value} was too high!`)),
+//             rxjs.delayWhen(value => rxjs.timer(value * 1000)) // restart in 6 seconds
+//             //rxjs.delay(6000) // restart in 6 seconds
+//         )
+//     )
+// ).subscribe(value => console.log(value));
+// // results:
+// // 0..1..2..3..4..5..
+// // 'Value 6 was too high!'
+// // - Wait 5 seconds then repeat
+// // 0..1..2..3..4..5..
+// // 'Value 6 was too high!'
+// // - Wait 5 seconds then repeat...
+
+/////////////////////////////////////////////////
+// rxjs.interval(1000).pipe(
+//     rxjs.take(10),
+//     rxjs.toArray()
+// ).subscribe(console.log);
+// // after 10 seconds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]

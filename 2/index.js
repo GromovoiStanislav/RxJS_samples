@@ -249,7 +249,7 @@ function delay(ms = 1000) {
 
 
 /////////////////////////////////////////
-const observableValues = rxjs.(1, 2, 3, 4, 5, 6);
+const observableValues = rxjs.of(1, 2, 3, 4, 5, 6);
 const [evens$, odds$] = rxjs.partition(observableValues, value => value % 2 === 0);
 odds$.subscribe(x => console.log('odds', x));
 evens$.subscribe(x => console.log('evens', x));

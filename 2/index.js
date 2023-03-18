@@ -240,6 +240,24 @@ function delay(ms = 1000) {
 //observable.subscribe((data)=>{console.log(data);})
 
 
+
+// const stream = new rxjs.Observable(observer => {
+//     setTimeout(() => {observer.next(1)}, 1500)
+//     setTimeout(() => {observer.complete()}, 2100)
+//     setTimeout(() => {observer.error('Something went wrong')}, 2000)
+//     setTimeout(() => {observer.next(2)}, 2500)
+// })
+
+// const sub = stream
+//     .subscribe(
+//         value => console.log('Next: ', value),
+//         error => console.log('Error: ', error),
+//         () => console.log('Complete')
+//     )
+// //sub.unsubscribe()
+
+
+
 /////////////////////////////////////////
 // rxjs.from([1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
 //     .pipe(

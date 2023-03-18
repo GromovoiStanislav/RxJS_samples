@@ -728,3 +728,63 @@ evens$.subscribe(x => console.log('evens', x));
 //     rxjs.toArray()
 // ).subscribe(console.log);
 // // after 10 seconds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
+////////////////////////////////////////////////////////
+// const subject = new rxjs.Subject()
+// subject.subscribe(console.log)
+// subject.next(1)
+// subject.next(2)
+// setTimeout(() => {
+//     subject.next(3)
+//     subject.complete()
+// },2000)
+// // Output:
+// // 1
+// // 2
+// // 3
+
+
+// const subject = new rxjs.Subject()
+// const int = rxjs.interval(1000)
+// int.subscribe(subject)
+// subject.subscribe(createSubscribe('Subject1'))
+// subject.subscribe(createSubscribe('Subject2'))
+// setTimeout(() => {
+//     subject.subscribe(console.log)
+// },2000);
+
+
+////////////////////////////////////////////////////////
+// const subject = new rxjs.BehaviorSubject(Hello')
+// subject.subscribe(console.log)
+// subject.next('world')
+// // Hello
+// // world
+// console.log(subject.getValue())
+// //world
+
+
+////////////////////////////////////////////////////////
+// const subject = new rxjs.ReplaySubject(2)//буфер
+// subject.next(1)
+// subject.next(2)
+// subject.next(3)
+// subject.next(4)
+// subject.complete()
+// subject.subscribe(console.log)
+// // Output:
+// // 3
+// // 4
+
+
+////////////////////////////////////////////////////////
+// const subject = new rxjs.AsyncSubject()//только последнее значение и только если completed
+// subject.next(1)
+// subject.next(2)
+// subject.next(3)
+// subject.complete()
+// subject.subscribe(console.log)
+// // Output:
+// // 3

@@ -266,18 +266,18 @@ function delay(ms = 1000) {
 //     .subscribe(x => console.log(x));
 
 
-/////////////////////////////////////////
-const observableValues = rxjs.of(1, 2, 3, 4, 5, 6);
-const [evens$, odds$] = rxjs.partition(observableValues, value => value % 2 === 0);
-odds$.subscribe(x => console.log('odds', x));
-evens$.subscribe(x => console.log('evens', x));
-// Logs:
-// odds 1
-// odds 3
-// odds 5
-// evens 2
-// evens 4
-// evens 6
+//////////////////// partition /////////////////////
+// const observableValues = rxjs.of(1, 2, 3, 4, 5, 6);
+// const [evens$, odds$] = rxjs.partition(observableValues, value => value % 2 === 0);
+// odds$.subscribe(x => console.log('odds', x));
+// evens$.subscribe(x => console.log('evens', x));
+// // Logs:
+// // odds 1
+// // odds 3
+// // odds 5
+// // evens 2
+// // evens 4
+// // evens 6
 
 
 ////////////////////////////////////////////////////////
@@ -797,7 +797,7 @@ evens$.subscribe(x => console.log('evens', x));
 // // 4
 
 
-////////////////////////////////////////////////////////
+////////////////////////////// AsyncSubject //////////////////////////
 // const subject = new rxjs.AsyncSubject()//только последнее значение и только если completed
 // subject.next(1)
 // subject.next(2)
@@ -806,3 +806,54 @@ evens$.subscribe(x => console.log('evens', x));
 // subject.subscribe(console.log)
 // // Output:
 // // 3
+
+
+///////////////////// count /////////////////
+// //Counts how many odd numbers are there between 1 and 7
+// const numbers = rxjs.range(1, 7);
+// const result = numbers.pipe(rxjs.count(i => i % 2 === 1));
+// result.subscribe(console.log);
+// // 4
+
+
+// const count = rxjs.of(1, 2, 3, 5, 10).pipe(rxjs.count());
+// count.subscribe(console.log);
+// // 5
+
+
+///////////////////// min /////////////////
+// // Get the minimal value of a series of numbers
+// rxjs.of(5, 4, 7, 2, 8)
+//     .pipe(rxjs.min())
+//     .subscribe(console.log);
+// // 2
+
+// // Use a comparer function to get the minimal item
+// rxjs.of(
+//     { age: 7, name: 'Foo' },
+//     { age: 5, name: 'Bar' },
+//     { age: 9, name: 'Beer' }
+// ).pipe(
+//     rxjs.min((a, b) => a.age < b.age ? -1 : 1)
+// )
+//     .subscribe(x => console.log(x.name));
+// // Bar
+
+
+///////////////////// max /////////////////
+// // Get the maximal value of a series of numbers
+// rxjs.of(5, 4, 7, 2, 8)
+//     .pipe(rxjs.max())
+//     .subscribe(console.log);
+// // 8
+
+// // Use a comparer function to get the maximal item
+// of(
+//     { age: 7, name: 'Foo' },
+//     { age: 5, name: 'Bar' },
+//     { age: 9, name: 'Beer' }
+// ).pipe(
+//     rxjs.max((a, b) => a.age < b.age ? -1 : 1)
+// )
+//     .subscribe(x => console.log(x.name));
+// // Beer

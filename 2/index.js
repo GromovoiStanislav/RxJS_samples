@@ -382,9 +382,9 @@ function delay(ms = 1000) {
 //         rxjs.tap(x => console.log('After: ', x)),
 //     )
 //     .subscribe(console.log);
-	
-	
-	
+
+
+
 //////////////////////////////////////////////////////
 // const s1 = rxjs.of('Hello')
 // const s2 = rxjs.of('world')
@@ -857,3 +857,155 @@ function delay(ms = 1000) {
 // )
 //     .subscribe(x => console.log(x.name));
 // // Beer
+
+
+///////////////////// scan /////////////////
+// An average of previous numbers.
+// const numbers$ = rxjs.of(1, 2, 3);
+// numbers$
+//     .pipe(
+//         rxjs.scan((total, n) => total + n),
+//         rxjs.map((sum, index) => ({ sum, index, avg: sum / (index + 1)}))
+//     )
+//     .subscribe(console.log);
+// // { sum: 1, index: 0, avg: 1 }
+// // { sum: 3, index: 1, avg: 1.5 }
+// // { sum: 6, index: 2, avg: 2 }
+
+// // The Fibonacci sequence
+// rxjs.interval(1000).pipe(
+//     rxjs.scan(([a, b]) => [b, a + b], [0, 1]),
+// ).subscribe(console.log)
+// // [1, 1]
+// // [1, 2]
+// // [2, 3]
+// // [3, 5]
+// // [5, 8]
+// // [8, 13]
+// // [13, 21] ...
+
+// rxjs.interval(1000).pipe(
+//     rxjs.scan(([a, b]) => [b, a + b], [0, 1]),
+//     rxjs.map(([, n]) => n),
+// ).subscribe(console.log)
+// // 1
+// // 2
+// // 3
+// // 5
+// // 8
+// // 13
+// // 21 ...
+
+// rxjs.interval(1000).pipe(
+//     rxjs.scan(([a, b]) => [b, a + b], [0, 1]),
+//     rxjs.map(([, n]) => n),
+//     rxjs.startWith(...[0, 1])
+// ).subscribe(console.log)
+// // 1
+// // 2
+// // 3
+// // 5
+// // 8
+// // 13
+// // 21 ...
+
+// const firstTwoFibs = [0, 1];
+// const fibonacci$ = rxjs.interval(1000).pipe(
+//     // Scan to get the fibonacci numbers (after 0, 1)
+//     rxjs.scan(([a, b]) => [b, a + b], firstTwoFibs),
+//     // Get the second number in the tuple, it's the one you calculated
+//     rxjs.map(([, n]) => n),
+//     // Start with our first two digits :)
+//     rxjs.startWith(...firstTwoFibs),
+// );
+// fibonacci$.subscribe(console.log);
+// // 0
+// // 1
+// // 1
+// // 2
+// // 3
+// // 5
+// // 8
+// // 13
+// // 21 ...
+
+
+// rxjs.interval(1000)
+//     .pipe(
+//         rxjs.map(() => 1),
+//         rxjs.scan((acc, val) => {
+//             console.log({ acc, val })
+//             return acc + val
+//         }, 0),
+//     )
+//     .subscribe(console.log)
+// // { acc: 0, val: 1 }
+// // 1
+// // { acc: 1, val: 1 }
+// // 2
+// // { acc: 2, val: 1 }
+// // 3
+// // { acc: 3, val: 1 }
+// // 4
+// // { acc: 4, val: 1 } ...
+
+
+///////////////////// mergeScan /////////////////
+// rxjs.interval(1000)
+//     .pipe(
+//         rxjs.map(() => 1),
+//         rxjs.mergeScan((acc, val) => {
+//             console.log({ acc, val })
+//             return rxjs.of(acc + val)
+//         }, 0),
+//     )
+//     .subscribe(console.log)
+// // { acc: 0, val: 1 }
+// // 1
+// // { acc: 1, val: 1 }
+// // 2
+// // { acc: 2, val: 1 }
+// // 3
+// // { acc: 3, val: 1 }
+// // 4
+// // { acc: 4, val: 1 } ...
+
+
+///////////////////// reduce /////////////////
+// rxjs.interval(1000)
+//     .pipe(
+//         rxjs.take(5),
+//         //rxjs.takeUntil(interval(5000)),
+//         rxjs.map(() => 1),
+//         rxjs.reduce((acc, val) => {
+//             console.log({ acc, val })
+//             return acc + val
+//         }, 0),
+//     )
+//     .subscribe(console.log)
+// // { acc: 0, val: 1 }
+// // { acc: 1, val: 1 }
+// // { acc: 2, val: 1 }
+// // { acc: 3, val: 1 }
+// // { acc: 4, val: 1 }
+// // 5
+
+
+///////////////////// expand /////////////////
+// rxjs.interval(1000)
+//     .pipe(
+//         rxjs.map(() => 1),
+//         rxjs.expand(x => rxjs.of(2 * x)),
+//         rxjs.take(10),
+//     )
+//     .subscribe(console.log)
+// // 1
+// // 2
+// // 4
+// // 8
+// // 16
+// // 32
+// // 64
+// // 128
+// // 256
+// // 512
